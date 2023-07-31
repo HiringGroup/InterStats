@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const App = ()=>{
     return (
@@ -10,14 +10,14 @@ const App = ()=>{
             Inner Stats
         </div>
         <div class='content'>
-            <Switch>
+            <Router>
                 <Route exact path='/'>
                     {/* login Component */}
                 </Route>
                 <Route exact path="/stats">
                     {/* app page component */}
                 </Route>
-            </Switch>
+            </Router>
         </div>
     </div>
     </Router>
