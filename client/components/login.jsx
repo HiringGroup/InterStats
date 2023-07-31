@@ -1,5 +1,11 @@
-const login = ()=>{
+import React from "react"
+
+const Login = ()=>{
     return (
-        <button>OAuth for Github</button>
+        <div>
+            <button>OAuth for Github</button>
+        </div>
     )
 }
+
+export default Login
