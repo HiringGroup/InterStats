@@ -7,16 +7,14 @@ const http = require("http");
 const socketIO = require("socket.io");
 
 const statRouter = require("./router/statsRouter");
-const authRouter = require("./router/authRouter")
+const authRouter = require("./router/authRouter");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:8080" }));
+app.use(cors());
 
 // app.use("/login", auth);
-app.use("/stats", statRouter);
-
-app.use('/authenticate',authRouter)
+app.use("/user", statRouter);
 
 app.get("/*", function (req, res) {
   res.sendFile(path.resolve(__dirname, "../index.html"), function (err) {
@@ -26,10 +24,6 @@ app.get("/*", function (req, res) {
   });
 });
 
-app.use("/getGroups", statRouter)
-
-app.use("/joinGroups", statRouter)
-
 app.listen(PORT, () => {
-  console.log(`WebSocket server running on ${PORT}`);
+  console.log(`server running on ${PORT}`);
 });

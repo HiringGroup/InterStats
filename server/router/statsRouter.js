@@ -8,17 +8,24 @@ statRouter.get("/stats/:id", statController.initialFetch, (req, res) => {
 });
 
 statRouter.post("/increment", statController.incrementStat, (req, res) => {
-  res.status(200).json("done");
+  return res.status(200).json("done");
 });
 statRouter.post("/joinGroups", statController.joinGroup, (req, res) => {
-  res.status(200);
+  return res.status(200);
 });
 
 statRouter.get("/getGroups/:id", statController.getGroups, (req, res) => {
-  res.status(200).json(res.locals.groups);
+  return res.status(200).json(res.locals.groups);
 });
+statRouter.get(
+  "/getUserGroups/:id",
+  statController.getUserGroups,
+  (req, res) => {
+    res.status(200).json(res.locals.userGroups);
+  }
+);
 
 statRouter.post("/increment", statController.incrementStat, (req, res) => {
-  res.status(200).json("done");
+  return res.status(200).json("done");
 });
 module.exports = statRouter;
