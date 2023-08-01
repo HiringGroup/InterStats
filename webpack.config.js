@@ -1,6 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const Dotenv = require('dotenv-webpack')
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   mode: process.env.NODE_ENV || "development",
@@ -21,15 +21,34 @@ module.exports = {
   performance: {
     hints: false,
   },
+  // devServer: {
+  //   proxy: {
+  //     "/api": {
+  //       target: "http://localhost:3000",
+  //       //   secure: false,
+  //     },
+  //   },
+  //   // ],
+  // },
+  // devServer: {
+  //   historyApiFallback: true,
+  //   port: 8080,
+  //   proxy: {
+  //     "/api": {
+  //       target: "http://localhost:8080",
+  //       router: () => "http://localhost:3000",
+  //     },
+  //   },
+  // },
   devServer: {
-    historyApiFallback: true,
     port: 8080,
-    proxy: {
-      "/api": {
-        target: "http://localhost:8080",
-        router: () => "http://localhost:3000",
+    proxy: [
+      {
+        context: ["/api"],
+        target: "http://localhost:3000",
       },
-    },
+    ],
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -51,7 +70,6 @@ module.exports = {
         test: /\.(png|jpg|jpeg|svg|gif)$/,
         loader: "file-loader",
       },
-
     ],
   },
   // resolve: {
