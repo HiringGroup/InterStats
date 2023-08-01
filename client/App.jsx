@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route, Router, BrowserRouter } from "react-router-dom";
 import Login from './components/Login.jsx';
+import Stats from "./components/Stats.jsx";
 
 
 const App = ()=>{
@@ -15,7 +16,7 @@ const App = ()=>{
             <div className='content'>
                 <Routes>
                     <Route exact path='/' element={<Login/>}/>
-                    <Route exact path="/stats" />
+                    <Route exact path="/stats" element={<Stats/>}/>
                 </Routes>
             </div>
         </BrowserRouter>
