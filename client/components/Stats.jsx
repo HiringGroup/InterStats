@@ -1,16 +1,9 @@
 import React, {useEffect} from "react"
-
+const CLIENT_ID = process.env.GITHUB_CLIENT_ID
+const CLIENT_SECRETS = process.env.GITHUB_CLIENT_SECRETS
 
 const Stats = () => {
-    useEffect(()=>{
-        const queryString = window.location.search
-        const urlParams = new URLSearchParams(queryString);
-        const codeParam = urlParams.get('code')
-        console.log(codeParam)
-
-        
-    },[]);
-
+    
     return(
         <div>
             <p>Testing stat page</p>
