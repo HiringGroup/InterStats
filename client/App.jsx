@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Routes, Route, Router, BrowserRouter } from "react-router-dom";
+import { Routes, Route, Router, BrowserRouter, Navigate } from "react-router-dom";
 import Login from './components/Login.jsx';
 import Stats from "./components/Stats.jsx";
 
@@ -28,9 +28,20 @@ const App = ()=>{
             }
             getAccessToken()
         }
- 
-
 },[]);
+
+    async function getUserData(){
+        await fetch('http://localhost:3000/getUserData',{
+            method: 'GET',
+            headers: {
+                "Authorization": "Bearer "+ localStorage.getItem('accessToken')
+            }
+        }).then((response)=>{
+            return response.json()
+        }).then((data)=>{
+            console.log(data)
+        })
+    }
 
     return (
     <div className='webpage'>
@@ -41,7 +52,7 @@ const App = ()=>{
         <BrowserRouter>
             <div className='content'>
                 <Routes>
-                    <Route exact path='/' element={<Login/>}/>
+                    <Route exact path='/' element={!localStorage.getItem('accessToken') ? <Login/> : <Navigate replace to={'/stats'} />}/>
                     <Route exact path="/stats" element={<Stats/>}/>
                 </Routes>
             </div>

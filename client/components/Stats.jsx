@@ -7,6 +7,7 @@ const Stats = () => {
     return(
         <div>
             <p>Testing stat page</p>
+            <button onClick={()=>{localStorage.removeItem("accessToken")}}>Logout</button>
         </div>
     )
 }
