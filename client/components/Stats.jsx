@@ -7,7 +7,7 @@ const Stats = () => {
     const [userData, setUserData] = useState({})
     
     useEffect(()=>{
-        getInfo()
+        getInfo();
     })
         
     // },[]);
@@ -26,7 +26,7 @@ const Stats = () => {
             //fetch memebers of the group
             // console.log('group ids', groupID)
             const memberArray = await getGroupMembers(groupID);
-            console.log('memb erarray',memberArray)
+            console.log('member array',memberArray)
             groupMembers.push(
                 <groupShow members={memberArray}/>
             )
@@ -69,12 +69,14 @@ const Stats = () => {
             setUserData(data)
         })
     }
-    
+    function logout(){
+        localStorage.removeItem("accessToken")
+        window.location.assign('http://localhost:8080/')
+    }
+
     return(
         <div>
-            {/* <button onClick={getInfo}>fetch</button> */}
-            <p>Testing stat page</p>
-            <button onClick={()=>{localStorage.removeItem("accessToken")}}>Logout</button>
+            <button onClick={logout}>Logout</button>
             <button onClick={getUserData}>Get User Info</button>
             {groupMembers}
             <div>
