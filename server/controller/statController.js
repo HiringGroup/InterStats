@@ -25,11 +25,13 @@ statController.initialFetch = async (req, res, next) => {
 
 statController.joinGroup = async (req, res, next) => {
   const { userid, groupid } = req.body;
+  // console.log('this is req.body', req.body)
   const values = [ userid, groupid ];
-  const join = `INSERT INTO groups (userid, groupid) VALUES($1, $2)`;
+  // console.log('this is values', values)
+  const join = `INSERT INTO groups VALUES( $1, $2 )`;
   try {
     const joined = await db.query(join, values);
-    console.log(joined);
+    // console.log('this is joined', joined);
     return next();
   } catch (err) {
     return err;
@@ -38,7 +40,7 @@ statController.joinGroup = async (req, res, next) => {
 
 statController.getGroups = async (req, res, next ) => {
   const id = req.params.id;
-  console.log(id)
+  // console.log(id)
   let arr = id.split('_')
   let str = arr.join(' ').toUpperCase()
   try {
@@ -46,7 +48,7 @@ statController.getGroups = async (req, res, next ) => {
 
     const getAllGroups = `SELECT * FROM USERS U INNER JOIN GROUPS G ON U.ID = G.ID WHERE G.GROUPID = '${str}'`
     const groups = await db.query(getAllGroups);
-    console.log('results', groups.rows)
+    // console.log('results', groups.rows)
     res.locals.groups = groups.rows;
     next();
   } catch (err){
