@@ -10,7 +10,6 @@ const CLIENT_ID = process.env.GITHUB_CLIENT_ID
 const CLIENT_SECRETS = process.env.GITHUB_CLIENT_SECRETS
 
 const statRouter = require("./router/statsRouter");
-
 const authRouter = require("./router/authRouter")
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
@@ -19,10 +18,11 @@ const bodyParser = require('body-parser');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:8080" }));
+app.use(cors());
 app.use(bodyParser.json())
 
 // app.use("/login", auth);
+app.use("/user", statRouter);
 app.use("/stats", statRouter);
 
 app.get('/getAccessToken', async function (req, res) {
@@ -77,10 +77,6 @@ app.get("/*", function (req, res) {
   });
 });
 
-app.use("/getGroups", statRouter)
-
-app.use("/joinGroups", statRouter)
-
 app.listen(PORT, () => {
-  console.log(`WebSocket server running on ${PORT}`);
+  console.log(`server running on ${PORT}`);
 });
