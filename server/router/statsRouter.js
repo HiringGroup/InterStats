@@ -7,4 +7,7 @@ statRouter.get("/stats/:id", statController.initialFetch, (req, res) => {
   res.status(200).json(res.locals.user);
 });
 
+statRouter.post("/increment", statController.incrementStat, (req, res) => {
+  res.status(200).json("done");
+});
 module.exports = statRouter;
