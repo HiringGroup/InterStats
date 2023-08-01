@@ -9,14 +9,13 @@ const App = ()=>{
     <div className='webpage'>
         <div className='title'>
             {/* title component */}
-            Inner Stats
+            InterStats
         </div>
         <BrowserRouter>
             <div className='content'>
                 <Routes>
                     <Route exact path='/' element={<Login/>}/>
                     <Route exact path="/stats" />
-                    
                 </Routes>
             </div>
         </BrowserRouter>
