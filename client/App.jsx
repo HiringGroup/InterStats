@@ -6,6 +6,7 @@ import Stats from "./components/Stats.jsx";
 
 const App = ()=>{
     const [rerender, setRerender] = useState(false);
+    // const [userData, setUserData] = useState({})
 
     useEffect(()=>{
         const queryString = window.location.search
@@ -30,18 +31,19 @@ const App = ()=>{
         }
 },[]);
 
-    async function getUserData(){
-        await fetch('http://localhost:3000/getUserData',{
-            method: 'GET',
-            headers: {
-                "Authorization": "Bearer "+ localStorage.getItem('accessToken')
-            }
-        }).then((response)=>{
-            return response.json()
-        }).then((data)=>{
-            console.log(data)
-        })
-    }
+    // async function getUserData(){
+    //     await fetch('http://localhost:3000/getUserData',{
+    //         method: 'GET',
+    //         headers: {
+    //             "Authorization": "Bearer "+ localStorage.getItem('accessToken')
+    //         }
+    //     }).then((response)=>{
+    //         return response.json()
+    //     }).then((data)=>{
+    //         console.log(data)
+    //         setUserData(data)
+    //     })
+    // }
 
     return (
     <div className='webpage'>
