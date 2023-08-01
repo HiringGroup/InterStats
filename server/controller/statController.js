@@ -13,14 +13,65 @@ statController.initialFetch = async (req, res, next) => {
       console.log("empty");
       let insertQuery = `INSERT INTO Users (username,sent, phoneInter, interview, offer,rejections, noReply) VALUES($1,0,0,0,0,0,0)`;
       resp = await db.query(insertQuery, param);
-      console.log("new user", resp);
+      //   console.log("new user", resp);
     }
     res.locals.user = resp;
-    console.log(resp);
+    console.log("done");
     return next();
   } catch (error) {
     return error;
   }
 };
+
+statController.incrementStat = async (req, res, next) => {
+  console.log("increment");
+  try {
+    const { userId, stat } = req.body;
+    console.log(userId, stat);
+    let sanitizedColumnName = "interview";
+    const params = [userId];
+    let query = `UPDATE Users SET ${sanitizedColumnName}=${sanitizedColumnName}+1 where username=$1`;
+    // console.log("done");
+    const resp = await db.query(query, params);
+    console.log(resp);
+    res.locals.stats = resp;
+    return next();
+  } catch (error) {
+    return error;
+  }
+};
+
+statController.joinGroup = async (req, res, next) => {
+  const { userid, groupid } = req.body;
+  // console.log('this is req.body', req.body)
+  const values = [ userid, groupid ];
+  // console.log('this is values', values)
+  const join = `INSERT INTO groups VALUES( $1, $2 )`;
+  try {
+    const joined = await db.query(join, values);
+    // console.log('this is joined', joined);
+    return next();
+  } catch (err) {
+    return err;
+  }
+};
+
+statController.getGroups = async (req, res, next ) => {
+  const id = req.params.id;
+  // console.log(id)
+  let arr = id.split('_')
+  let str = arr.join(' ').toUpperCase()
+  try {
+
+
+    const getAllGroups = `SELECT * FROM USERS U INNER JOIN GROUPS G ON U.ID = G.ID WHERE G.GROUPID = '${str}'`
+    const groups = await db.query(getAllGroups);
+    // console.log('results', groups.rows)
+    res.locals.groups = groups.rows;
+    next();
+  } catch (err){
+    return err;
+  }
+}
 
 module.exports = statController;

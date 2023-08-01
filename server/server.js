@@ -26,6 +26,10 @@ app.get("/*", function (req, res) {
   });
 });
 
+app.use("/getGroups", statRouter)
+
+app.use("/joinGroups", statRouter)
+
 app.listen(PORT, () => {
   console.log(`WebSocket server running on ${PORT}`);
 });
