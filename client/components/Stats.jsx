@@ -1,41 +1,42 @@
-import React, {useEffect, useState} from "react"
-const CLIENT_ID = process.env.GITHUB_CLIENT_ID
-const CLIENT_SECRETS = process.env.GITHUB_CLIENT_SECRETS
-import groupShow from "./group.jsx"
+import React, {useEffect} from "react"
+import GroupShow from "./groupShow.jsx"
 
 const Stats = () => {
     const [userData, setUserData] = useState({})
-    
+
     useEffect(()=>{
         getInfo();
     })
-        
+
     // },[]);
     let user = 'daniel'
-    let groupId = ''
     const groups = [] //list of group ids of the user
-    const groupMembers = [] //list of lists of memebers in each group of the user
+//list of lists of memebers in each group of the user
     const getInfo = async () =>{
+        console.log('called getinfo')
+        await userGroupInfo();
         const info = await fetch('http://localhost:3000/user/stats/'+user)
         const data = await info.json();
         // console.log(data)
-        await userGroupInfo();
-        
+        // let groups = await userGroupInfo();
+        console.log('inside getinfo ', groups)
+        const memTemp = []
         for(let x = 0; x< groups.length; x++){
+
             let groupID = groups[x]
+            // console.log(groupID)
             //fetch memebers of the group
-            // console.log('group ids', groupID)
             const memberArray = await getGroupMembers(groupID);
-            console.log('member array',memberArray)
-            groupMembers.push(
-                <groupShow members={memberArray}/>
+            console.log('member arry',memberArray)
+            memTemp.push(
+                <GroupShow groupMembers={memberArray}/> //
             )
         }
-        console.log('list of memebers of different gorups', groupMembers)
+        setGroupMembers(memTemp)
     }
 
-    
- 
+
+
     const userGroupInfo = async () => {
         const groupList = await fetch('http://localhost:3000/user/getUserGroups/'+user);
         const data = await groupList.json();
@@ -44,6 +45,7 @@ const Stats = () => {
             // console.log(data[i])
             groups.push(data[i].groupid)
         }
+
         // console.log(groups)
     }
     const getGroupMembers = async (groupname) =>{
@@ -51,7 +53,9 @@ const Stats = () => {
         const data = await members.json();
         const memberlist = []
         for (let i = 0; i < data.length; i++){
-            memberlist.push(data[i].username)
+            memberlist.push(data[i]) // currently grabs all the users and associated data in the same group
+            // console.log(data[i])
+
         }
         // console.log('member list', memberlist)
         return memberlist
@@ -79,9 +83,7 @@ const Stats = () => {
             <button onClick={logout}>Logout</button>
             <button onClick={getUserData}>Get User Info</button>
             {groupMembers}
-            <div>
-                
-            </div>
+
         </div>
     )
 }
