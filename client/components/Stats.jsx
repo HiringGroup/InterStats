@@ -1,14 +1,13 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
+const CLIENT_ID = process.env.GITHUB_CLIENT_ID
+const CLIENT_SECRETS = process.env.GITHUB_CLIENT_SECRETS
 import groupShow from "./group.jsx"
 
 const Stats = () => {
-    // useEffect(()=>{
-    //     const queryString = window.location.search
-    //     const urlParams = new URLSearchParams(queryString);
-    //     const codeParam = urlParams.get('code')
-    //     console.log(codeParam)
+    const [userData, setUserData] = useState({})
+    
     useEffect(()=>{
-        getInfo()
+        getInfo();
     })
         
     // },[]);
@@ -27,7 +26,7 @@ const Stats = () => {
             //fetch memebers of the group
             // console.log('group ids', groupID)
             const memberArray = await getGroupMembers(groupID);
-            console.log('memb erarray',memberArray)
+            console.log('member array',memberArray)
             groupMembers.push(
                 <groupShow members={memberArray}/>
             )
@@ -57,10 +56,28 @@ const Stats = () => {
         // console.log('member list', memberlist)
         return memberlist
     }
+    async function getUserData(){
+        await fetch('http://localhost:3000/getUserData',{
+            method: 'GET',
+            headers: {
+                "Authorization": "Bearer "+ localStorage.getItem('accessToken')
+            }
+        }).then((response)=>{
+            return response.json()
+        }).then((data)=>{
+            console.log(data)
+            setUserData(data)
+        })
+    }
+    function logout(){
+        localStorage.removeItem("accessToken")
+        window.location.assign('http://localhost:8080/')
+    }
+
     return(
         <div>
-            {/* <button onClick={getInfo}>fetch</button> */}
-            <p>Testing stat page</p>
+            <button onClick={logout}>Logout</button>
+            <button onClick={getUserData}>Get User Info</button>
             {groupMembers}
             <div>
                 
