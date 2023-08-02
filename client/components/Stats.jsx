@@ -1,12 +1,19 @@
-import React, {useEffect} from "react"
-import GroupShow from "./groupShow.jsx"
+import React, {useState, useEffect } from "react";
+import GroupShow from "./groupShow.jsx";
+
 
 const Stats = () => {
-    const [userData, setUserData] = useState({})
-
-    useEffect(()=>{
-        getInfo();
-    })
+    const [groupMembers, setGroupMembers] = useState([]);
+    // useEffect(()=>{
+    //     const queryString = window.location.search
+    //     const urlParams = new URLSearchParams(queryString);
+    //     const codeParam = urlParams.get('code')
+    //     console.log(codeParam)
+    useEffect( ()=>{
+        console.log('gets')
+         //gets groupIDs and puts into groups
+        getInfo()
+    }, []);
 
     // },[]);
     let user = 'daniel'
@@ -29,7 +36,7 @@ const Stats = () => {
             const memberArray = await getGroupMembers(groupID);
             console.log('member arry',memberArray)
             memTemp.push(
-                <GroupShow groupMembers={memberArray}/> //
+                <GroupShow key="{memberArray.id}" groupMembers={memberArray}/> //
             )
         }
         setGroupMembers(memTemp)
@@ -60,28 +67,10 @@ const Stats = () => {
         // console.log('member list', memberlist)
         return memberlist
     }
-    async function getUserData(){
-        await fetch('http://localhost:3000/getUserData',{
-            method: 'GET',
-            headers: {
-                "Authorization": "Bearer "+ localStorage.getItem('accessToken')
-            }
-        }).then((response)=>{
-            return response.json()
-        }).then((data)=>{
-            console.log(data)
-            setUserData(data)
-        })
-    }
-    function logout(){
-        localStorage.removeItem("accessToken")
-        window.location.assign('http://localhost:8080/')
-    }
-
     return(
         <div>
-            <button onClick={logout}>Logout</button>
-            <button onClick={getUserData}>Get User Info</button>
+            {/* <button onClick={getInfo}>fetch</button> */}
+            <p>Testing stat page</p>
             {groupMembers}
 
         </div>

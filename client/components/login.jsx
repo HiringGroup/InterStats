@@ -4,7 +4,7 @@ const CLIENT_ID = process.env.GITHUB_CLIENT_ID
 
 const Login = ()=>{
     function auth (){
-        window.location.assign('https://github.com/login/oauth/authorize?client_id=' + CLIENT_ID + '&redirect_uri=http://localhost:8080/stats')
+        window.location.assign('https://github.com/login/oauth/authorize?client_id=' + '940b1bb8b7ca81379cff' + '&redirect_uri=http://localhost:8080/stats')
     }
 
     return (
@@ -17,4 +17,4 @@ const Login = ()=>{
 export default Login
 
 
-// 
+//
