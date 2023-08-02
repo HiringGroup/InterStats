@@ -7,7 +7,6 @@ import Stats from "./components/Stats.jsx";
 const App = ()=>{
     return (
         <div>
-
             <Stats/>
         </div>
     // <div className='webpage'>
